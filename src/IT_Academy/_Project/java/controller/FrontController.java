@@ -27,7 +27,7 @@ public class FrontController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         DataBase db = new DataBase();
-        db.buildDefaultStructure();
+        db.buildDefaultStructure();  //creates also one default administrator with login "Ivan" and password "user00"
         db.reset();
     }
 
@@ -50,7 +50,7 @@ public class FrontController extends HttpServlet {
 
     @Override
     public void destroy() {
-        new DataBase().deleteTables();
+        new DataBase().deleteDatabase();
     }
 
 }

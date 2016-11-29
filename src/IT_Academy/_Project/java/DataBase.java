@@ -142,9 +142,34 @@ public class DataBase {
     }
 
     /**
+     * removes database
+     */
+    public void deleteDatabase() {
+        try (Statement st = getStatement()) {
+            st.executeUpdate(String.format(Locale.ENGLISH, "DROP DATABASE IF EXISTS Olgarudzko;"));
+        } catch (SQLException e) {
+            System.out.println(Messages.ERROR_DATABASE + e.getMessage());
+        }
+        System.out.println("Database removed.");
+    }
+
+    /**
+     * creates new database
+     */
+    private void createDatabase() {
+        try (Connection connection = ConnectionCreator.getFirstConnection();
+             Statement st = connection.createStatement()) {
+            st.executeUpdate(String.format(Locale.ENGLISH, "CREATE DATABASE IF NOT EXISTS Olgarudzko DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"));
+        } catch (SQLException e) {
+            System.out.println(Messages.ERROR_DATABASE + e.getMessage());
+        }
+        System.out.println("Database created.");
+    }
+
+    /**
      * deletes all tables from database
      */
-    public void deleteTables() {
+    void deleteTables() {
 
         try (Statement st = getStatement()) {
             st.executeUpdate(String.format(Locale.ENGLISH, SqlRequests.DROP_TABLES));
@@ -202,7 +227,8 @@ public class DataBase {
      * replaces database data with new prepared objects
      */
     public void reset() {
-        deleteTables();
+        deleteDatabase();
+        createDatabase();
         createTables();
         fillTables();
     }

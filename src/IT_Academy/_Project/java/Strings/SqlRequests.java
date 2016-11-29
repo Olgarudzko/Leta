@@ -4,18 +4,18 @@ package IT_Academy._Project.java.Strings;
 public interface SqlRequests {
 
     String DROP_TABLES = "DROP TABLE IF EXISTS Subscription, Periodicals, Readership, Users, Roles";
-    String CR_TABLE_ROLES = "CREATE TABLE olgarudzko.Roles ( ID INT NULL AUTO_INCREMENT , Role VARCHAR(20) ," +
+    String CR_TABLE_ROLES = "CREATE TABLE IF NOT EXISTS olgarudzko.Roles ( ID INT NULL AUTO_INCREMENT , Role VARCHAR(20) ," +
             " PRIMARY KEY (ID)) ENGINE = InnoDB;";
-    String CR_TABLE_USERS = "CREATE TABLE olgarudzko.Users ( ID INT NULL AUTO_INCREMENT , Name VARCHAR(30) " +
+    String CR_TABLE_USERS = "CREATE TABLE IF NOT EXISTS olgarudzko.Users ( ID INT NULL AUTO_INCREMENT , Name VARCHAR(30) " +
             "NOT NULL , Password VARCHAR(30) NOT NULL, FK_Role INT NOT NULL , BirthYear INT(4) NOT NULL , Sex CHAR NOT NULL , " +
             "PRIMARY KEY (ID), FOREIGN KEY (FK_Role) REFERENCES Roles(ID)) ENGINE = InnoDB;";
-    String CR_TABLE_READERSHIP = "CREATE TABLE olgarudzko.Readership ( ID INT NULL AUTO_INCREMENT , Audience VARCHAR(20)" +
+    String CR_TABLE_READERSHIP = "CREATE TABLE IF NOT EXISTS olgarudzko.Readership ( ID INT NULL AUTO_INCREMENT , Audience VARCHAR(20)" +
             " NOT NULL , PRIMARY KEY (ID)) ENGINE = InnoDB;";
-    String CR_TABLE_PERIODICALS = "CREATE TABLE olgarudzko.Periodicals ( ID INT NULL AUTO_INCREMENT , Title VARCHAR(30)" +
+    String CR_TABLE_PERIODICALS = "CREATE TABLE IF NOT EXISTS olgarudzko.Periodicals ( ID INT NULL AUTO_INCREMENT , Title VARCHAR(30)" +
             " NOT NULL , SubIndex INT NOT NULL , FK_Readership INT NOT NULL , FK_Added INT " +
             "NOT NULL , PRIMARY KEY (ID) , FOREIGN KEY (FK_Readership) REFERENCES Readership(ID) , " +
             "FOREIGN KEY (FK_Added) REFERENCES Users(ID)) ENGINE = InnoDB;";
-    String CR_TABLE_SUBSCRIPTION = "CREATE TABLE olgarudzko.Subscription ( ID INT NULL AUTO_INCREMENT , FK_Subscriber INT " +
+    String CR_TABLE_SUBSCRIPTION = "CREATE TABLE IF NOT EXISTS olgarudzko.Subscription ( ID INT NULL AUTO_INCREMENT , FK_Subscriber INT " +
             "NOT NULL , FK_Periodical INT NOT NULL , PRIMARY KEY (ID) , FOREIGN KEY (FK_Subscriber)" +
             " REFERENCES Users(ID) , FOREIGN KEY (FK_Periodical) REFERENCES Periodicals(ID)) ENGINE = InnoDB;";
     String WHERE_READERSHIP = "WHERE Periodicals.FK_Readership='%d'";
